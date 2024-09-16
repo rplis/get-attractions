@@ -1,0 +1,7 @@
+[MASTER]
+disable=
+    missing-docstring,
+    missing-class-docstring,
+    missing-function-docstring
+
+# Other pylint configurations...

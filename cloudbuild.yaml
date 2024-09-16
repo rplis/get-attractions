@@ -1,25 +1,21 @@
 steps:
-- name: 'python:3.9'
-  entrypoint: pip
-  args: ['install', 'poetry']
+  # Clone the repository
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud source repos clone get-attractions
+        cd get-attractions
+        # If you want to use a specific branch or tag, uncomment and modify the next line
+        # git checkout your-branch-or-tag
 
-- name: 'python:3.9'
-  entrypoint: poetry
-  args: ['install']
+  # Install dependencies and run tests (if any)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['run', '--rm', '-v', '$PWD:/app', '-w', '/app', 'python:3.9', 'bash', '-c', 'pip install poetry && poetry install && poetry run pytest']
 
-- name: 'python:3.9'
-  entrypoint: poetry
-  args: ['run', 'pytest']
+  # Update the Compute Engine instance
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['compute', 'instances', 'update-container', 'your-instance-name', '--zone=your-zone', '--container-image=gcr.io/$PROJECT_ID/your-startup-container:latest']
 
-- name: 'python:3.9'
-  entrypoint: poetry
-  args: ['build']
-
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'dist/*', 'gs://YOUR_BUCKET_NAME/']
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'instances', 'update-container', 'get-attractions-instance', 
-         '--container-image=gcr.io/cloud-builders/gcloud',
-         '--container-command=sh,-c,pip install poetry && poetry config virtualenvs.create false && poetry install --no-dev && poetry run get-attractions',
-         '--zone=us-central1-a']
+# ... other configurations ...
