@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Poetry
+dist/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Google Cloud credentials
+*.json
+
+# Logs
+*.log
+
+# Test coverage
+.coverage
+htmlcov/

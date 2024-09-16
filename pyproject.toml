@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "get_attractions"
+version = "0.1.0"
+description = "API to find nearby tourist attractions using Google Maps API"
+authors = ["Rafal Plis <rafal.plis2gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.95.0"
+uvicorn = "^0.21.1"
+googlemaps = "^4.10.0"
+haversine = "^2.8.0"
+pydantic = "^1.10.7"
+google-cloud-secret-manager = "^2.16.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+get-attractions = "get_attractions.main:start"
