@@ -17,3 +17,14 @@ poetry install
 
 # Run the application
 poetry run get-attractions
+
+# Wait for the service to start
+sleep 10
+
+# Check if the service is running and listening on port 8000
+if netstat -tuln | grep ':8000'; then
+    echo "Service is running and listening on port 8000"
+else
+    echo "Service is not running or not listening on port 8000"
+    exit 1
+fi
